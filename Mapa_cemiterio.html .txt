@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Cemitério Vila Formosa</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    #mapa { display: grid; grid-template-columns: repeat(10, 40px); gap: 4px; justify-content: center; }
+    .quadra {
+      width: 40px; height: 40px; border: 1px solid #ccc;
+      display: flex; align-items: center; justify-content: center;
+      background-color: #f0f0f0; border-radius: 4px; cursor: pointer;
+    }
+    .destacada { background-color: #007bff; color: white; font-weight: bold; }
+    #trajeto { margin-top: 20px; font-size: 14px; color: #555; }
+    input { padding: 8px; margin-top: 10px; }
+    button { padding: 8px 16px; margin-top: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Mapa do Cemitério Vila Formosa</h1>
+  <p>Digite o número da quadra para localizar:</p>
+  <input type="number" id="quadraInput" placeholder="Ex.: 56" min="1" max="100">
+  <button onclick="destacarQuadra()">Localizar Quadra</button>
+
+  <div id="mapa"></div>
+  <div id="trajeto"></div>
+
+  <script>
+    const mapa = document.getElementById('mapa');
+    for (let i = 1; i <= 100; i++) {
+      const quadra = document.createElement('div');
+      quadra.className = 'quadra';
+      quadra.textContent = i;
+      mapa.appendChild(quadra);
+    }
+
+    function destacarQuadra() {
+      const numero = parseInt(document.getElementById('quadraInput').value);
+      const quadras = document.querySelectorAll('.quadra');
+      quadras.forEach(q => q.classList.remove('destacada'));
+
+      if (numero >= 1 && numero <= 100) {
+        quadras[numero - 1].classList.add('destacada');
+        document.getElementById('trajeto').textContent =
+          `Trajeto: Siga em linha reta até a quadra ${numero}.`;
+      } else {
+        document.getElementById('trajeto').textContent = 'Número de quadra inválido!';
+      }
+    }
+  </script>
+</body>
+</html>
